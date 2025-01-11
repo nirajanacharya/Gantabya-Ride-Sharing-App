@@ -4,6 +4,12 @@
 
 
 
+![Screenshot 2025-01-11 190215](https://github.com/user-attachments/assets/bf5d2719-7f82-439b-8a6a-7512f9e12b01)
+![Screenshot 2025-01-11 190204](https://github.com/user-attachments/assets/93ffb8d7-c2fd-441f-bb16-ffc6ddb89d29)
+![Screenshot 2025-01-11 190157](https://github.com/user-attachments/assets/2736bbbf-6d3c-472a-963d-a2018bfefc34)
+![Screenshot 2025-01-11 190226](https://github.com/user-attachments/assets/62075c08-7c6d-499e-8290-372f23f7091f)
+
+
 # API Documentation
 
 ## Users Endpoints
