@@ -367,6 +367,7 @@ The request body should be a JSON object with the following structure:
 ```
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ### Endpoint: `/captains/login`
 
 #### Method: POST
@@ -524,8 +525,13 @@ This endpoint is used to log out the authenticated captain by clearing the token
 ```
 ```
 =======
+=======
+>>>>>>> 1b2a89486c97ee92e0b5ad69b9e3aeb2d00348a8
 users
 
  and `/captains`:
 
+<<<<<<< HEAD
+>>>>>>> 1b2a89486c97ee92e0b5ad69b9e3aeb2d00348a8
+=======
 >>>>>>> 1b2a89486c97ee92e0b5ad69b9e3aeb2d00348a8
