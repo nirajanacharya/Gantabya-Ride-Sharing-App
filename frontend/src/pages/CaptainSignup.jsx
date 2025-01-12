@@ -59,9 +59,9 @@ const CaptainSignup = () => {
           className="bg-[#111]  text-white font-semibold mb-5 rounded px-4 border w-full text-lg placeholder:text-sm"
           type="submit"
         >
-          Login
+          Register as Captain
         </button>
-        <p >Already have a account? <Link to='/login' className="text-blue-400">Login</Link></p>
+        <p >Already have a account? <Link to='/captain-login' className="text-blue-400">Captain Login</Link></p>
       </form>
     </div>
     <div>
