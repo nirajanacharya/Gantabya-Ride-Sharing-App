@@ -523,15 +523,80 @@ This endpoint is used to log out the authenticated captain by clearing the token
   "message": "Logged out successfully"
 }
 ```
+### Endpoint: `/rides/get-fare`
+
+#### Method: GET
+
+#### Description:
+This endpoint is used to get the fare estimate for a ride based on the pickup and destination locations.
+
+#### Query Parameters:
+The request should include the following query parameters:
+
+```json
+{
+  "pickup": "string (required)",
+  "destination": "string (required)"
+}
 ```
-=======
-=======
->>>>>>> 1b2a89486c97ee92e0b5ad69b9e3aeb2d00348a8
-users
 
- and `/captains`:
+#### Responses:
 
-<<<<<<< HEAD
->>>>>>> 1b2a89486c97ee92e0b5ad69b9e3aeb2d00348a8
-=======
->>>>>>> 1b2a89486c97ee92e0b5ad69b9e3aeb2d00348a8
+##### 200 OK
+
+```json
+{
+  "auto": "number (fare for auto)",
+  "car": "number (fare for car)",
+  "motorcycle": "number (fare for motorcycle)"
+}
+```
+
+**Example Response:**
+
+```json
+{
+  "auto": 150.5,
+  "car": 250.75,
+  "motorcycle": 100.25
+}
+```
+
+##### 400 Bad Request
+
+```json
+{
+  "errors": [
+    {
+      "msg": "Pickup location is required",
+      "param": "pickup",
+      "location": "query"
+    },
+    {
+      "msg": "Destination is required",
+      "param": "destination",
+      "location": "query"
+    }
+  ]
+}
+```
+
+**Example Response:**
+
+```json
+{
+  "errors": [
+    {
+      "msg": "Pickup location is required",
+      "param": "pickup",
+      "location": "query"
+    },
+    {
+      "msg": "Destination is required",
+      "param": "destination",
+      "location": "query"
+    }
+  ]
+}
+```
+```

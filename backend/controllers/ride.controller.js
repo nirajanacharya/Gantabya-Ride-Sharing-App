@@ -23,3 +23,24 @@ module.exports.createRide = async (req, res) => {
         });
     }
 }
+
+module.exports.getFare = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+        const { pickup, destination } = req.query;
+        console.log('Received request for getFare with pickup:', pickup, 'and destination:', destination);
+        const fares = await rideService.getFare(pickup, destination);
+        console.log('Fares calculated:', fares);
+        res.status(200).json(fares);
+    } catch (error) {
+        console.error('Error in getFare:', error.message);
+        res.status(400).json({
+            code: 'BAD_REQUEST_ERROR || ride controller',
+            message: error.message
+        });
+    }
+}

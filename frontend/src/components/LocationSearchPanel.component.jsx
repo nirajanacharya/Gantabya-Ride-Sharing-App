@@ -9,8 +9,6 @@ const LocationSearchPanel = (props) => {
         <div 
           onClick={() => {
             props.handleSuggestionClick(element, props.type);
-            props.setvehiclepanel(true);
-            props.setpanelopen(false);
           }}
           key={index}
           className="flex items-center p-3 border-2 border-white rounded-xl active:border-black"

@@ -15,21 +15,22 @@ async function getFare(pickup, destination){
     const baseFareMotorcycle = 15;
 
     const perKmAuto = 12;
-    const perKmCar = 18;
-    const perKmMotorcycle = 8;
+    const perKmCar = 25;
+    const perKmMotorcycle = 5;
     
     console.log(distanceTime);
 
     const fares = {
-        auto: baseFareAuto + ((distanceTime.distance)/1000 * perKmAuto),
-        car: baseFareCar + ((distanceTime.distance)/1000 * perKmCar),
-        motorcycle: baseFareMotorcycle + ((distanceTime.distance)/1000 * perKmMotorcycle)
+        auto: Math.round(baseFareAuto + ((distanceTime.distance)/1000 * perKmAuto)),
+        car: Math.round(baseFareCar + ((distanceTime.distance)/1000 * perKmCar)),
+        motorcycle: Math.round(baseFareMotorcycle + ((distanceTime.distance)/1000 * perKmMotorcycle))
     };
     console.log(fares);
 
     return fares;
 }
 
+module.exports.getFare = getFare;
 
 function getOtp(num){
     function generateOtp(num){
