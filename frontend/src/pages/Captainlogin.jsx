@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'  
 import axios from 'axios' 
 import {CaptainDataContext} from '../context/CaptainContext'  
-import { useContext } from 'react'
+
+import GantabyaRider from '../assets/img/GantabyaRider.jpg'
 
 const Captainlogin = () => {
   const navigate = useNavigate(); 
@@ -43,8 +44,8 @@ const Captainlogin = () => {
     <div>
       <div>
         <img
-          className="w-16 mb-10 "
-          src="https://www.svgrepo.com/show/505031/uber-driver.svg"
+          className="w-[35%] mb-10 -mt-5 -ml-8"
+          src={GantabyaRider}
           alt="Uber logo"
         />
       </div>

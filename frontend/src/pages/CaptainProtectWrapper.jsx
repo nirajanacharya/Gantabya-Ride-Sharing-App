@@ -26,15 +26,12 @@ const CaptainProtectWrapper = ({ children }) => {
                 },
             })
             .then((response) => {
-                console.log('Captain profile:', response.data);
                 updateCaptain(response.data);
                 setisLoading(false); // Loading is complete
             })
             .catch((error) => {
                 console.error('Error fetching captain profile:', error.response?.data || error.message);
                 if (error.response?.status === 401) {
-                    // Unauthorized, remove token and redirect to login
-                    console.error('Unauthorized: Redirecting to login.');
                     localStorage.removeItem('token');
                     navigate('/captain-login');
                 } else {

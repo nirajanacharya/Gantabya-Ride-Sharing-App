@@ -5,53 +5,71 @@ import LocationSearchPanel from "../components/LocationSearchPanel.component";
 import car from "../assets/img/car.png";
 import VehiclePanelcomponent from "../components/VehiclePanel.component";
 import ConfirmedRide from "../components/ConfirmedRide";
+import GantabyaUser from "../assets/img/GantabyaUser-.png";    
+import LookingForDriver from "../components/LookingForDriver";
+import WaitingForDriver from "../components/WaitingForDriver";
 
 const Home = () => {
   const [pickup, setpickup] = useState("");
   const [destination, setdestination] = useState("");
   const [panelopen, setpanelopen] = useState(false);
 
-const [vehiclepanel, setvehiclepanel] = useState(false);
-const vehiclepanelRef = useRef(null);
+  const [vehiclepanel, setvehiclepanel] = useState(false);
+  const vehiclepanelRef = useRef(null);
 
-const [confirmridepanel, setconfirmridepanel] = useState(false);
-const confirmridepanelRef = useRef(null);
+  const [confirmridepanel, setconfirmridepanel] = useState(false);
+  const confirmridepanelRef = useRef(null);
 
-
+  const [vehiclefound, setvehiclefound] = useState(false);
+  const vehiclefoundRef = useRef(null);
 
   const panelRef = useRef(null);
   const panelCloseRef = useRef(null);
 
+  const [waitingfordriver, setwaitingfordriver] = useState(false)
+  const waitingfordriverRef = useRef(null)
   useEffect(() => {
-    if(confirmridepanel){
-      gsap.to(confirmridepanelRef.current, {transform: "translateY(0%)"});
-    }else{
-      gsap.to(confirmridepanelRef.current, {transform: "translateY(100%)"});
+    if (waitingfordriver && waitingfordriverRef.current) {
+      gsap.to(waitingfordriverRef.current, { transform: "translateY(0%)" });
+    } else if (waitingfordriverRef.current) {
+      gsap.to(waitingfordriverRef.current, { transform: "translateY(100%)" });
     }
-  },[confirmridepanel]);
+  }, [waitingfordriver]);
 
 
   useEffect(() => {
-    if (panelopen) {
+    if (confirmridepanel && confirmridepanelRef.current) {
+      gsap.to(confirmridepanelRef.current, { transform: "translateY(0%)" });
+    } else if (confirmridepanelRef.current) {
+      gsap.to(confirmridepanelRef.current, { transform: "translateY(100%)" });
+    }
+  }, [confirmridepanel]);
+
+  useEffect(() => {
+    if (panelopen && panelRef.current && panelCloseRef.current) {
       gsap.to(panelRef.current, { height: "70%", duration: 0.5 });
       gsap.to(panelCloseRef.current, { opacity: 1 });
-    } else {
+    } else if (panelRef.current && panelCloseRef.current) {
       gsap.to(panelRef.current, { height: "0%", duration: 0.5 });
       gsap.to(panelCloseRef.current, { opacity: 0 });
     }
   }, [panelopen]);
 
-  useEffect(() => { 
-    
-    if (vehiclepanel) {
-      gsap.to(vehiclepanelRef.current, {transform: "translateY(0%)"});
-    
-    }else{
-      gsap.to(vehiclepanelRef.current, {transform: "translateY(100%)"});
+  useEffect(() => {
+    if (vehiclepanel && vehiclepanelRef.current) {
+      gsap.to(vehiclepanelRef.current, { transform: "translateY(0%)" });
+    } else if (vehiclepanelRef.current) {
+      gsap.to(vehiclepanelRef.current, { transform: "translateY(100%)" });
     }
+  }, [vehiclepanel]);
 
-  },[vehiclepanel]);
-
+  useEffect(() => {
+    if (vehiclefound && vehiclefoundRef.current) {
+      gsap.to(vehiclefoundRef.current, { transform: "translateY(0%)" });
+    } else if (vehiclefoundRef.current) {
+      gsap.to(vehiclefoundRef.current, { transform: "translateY(100%)" });
+    }
+  }, [vehiclefound]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -63,7 +81,7 @@ const confirmridepanelRef = useRef(null);
       <div>
         <img
           className="w-16 absolute left-5 top-5"
-          src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png"
+          src={GantabyaUser}
           alt="uber logo"
         />
       </div>
@@ -82,7 +100,7 @@ const confirmridepanelRef = useRef(null);
             onClick={() => setpanelopen(false)}
             ref={panelCloseRef}
           >
-            <i class="ri-arrow-down-s-line"></i>
+            <i className="ri-arrow-down-s-line"></i>
           </h5>
           <h4 className="text-3xl font-semibold">Find a trip</h4>
           <form className="mb-5 relative" onSubmit={submitHandler}>
@@ -119,8 +137,15 @@ const confirmridepanelRef = useRef(null);
         <VehiclePanelcomponent setvehiclepanel={setvehiclepanel} setconfirmridepanel={setconfirmridepanel}/>
       </div>
       <div ref={confirmridepanelRef} className="fixed z-10 bottom-0 bg-white w-full p-3 translate-y-full">
-       <ConfirmedRide/>
+       <ConfirmedRide setconfirmridepanel={setconfirmridepanel} setvehiclefound={setvehiclefound}/>
       </div>
+      <div ref={vehiclefoundRef} className="fixed z-10 bottom-0 bg-white w-full p-3 translate-y-full">
+        <LookingForDriver setvehiclefound={setvehiclefound}/>   
+      </div>
+      <div   ref={waitingfordriverRef} className="fixed z-10 bottom-0 bg-white w-full p-3 translate-y-full ">
+        <WaitingForDriver setwaitingfordriver={setwaitingfordriver} />   
+      </div>
+
     </div>
   );
 };
