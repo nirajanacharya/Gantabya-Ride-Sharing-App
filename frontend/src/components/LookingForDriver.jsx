@@ -18,18 +18,18 @@ const LookingForDriver = (props) => {
           <div className="flex items-center gap-5 p-3 border-b-2" >
             <i class="ri-user-location-fill"></i>
             <div>
-              <h3 className="text-lg font-medium">Thamel, Kathmandu</h3>
+              <h3 className="text-lg font-medium">561/22</h3>
               <p className="text-sm -mt-1 text-gray-600">
-                Thamel, Kathmandu, street-432
+                {props.pickup}
               </p>
             </div>
           </div>
           <div className="flex items-center gap-5 p-3 border-b-2">
           <i className="ri-map-pin-line"></i>
             <div>
-              <h3 className="text-lg font-medium">Thamel, Kathmandu</h3>
+              <h3 className="text-lg font-medium">561/22</h3>
               <p className="text-sm -mt-1 text-gray-600">
-                Thamel, Kathmandu, street-432
+                {props.destination}
               </p>
             </div>
           </div>
@@ -37,7 +37,7 @@ const LookingForDriver = (props) => {
             
             <i class="ri-cash-line"></i>
             <div>
-              <h3 className="text-lg font-medium">Rs. 450</h3>
+              <h3 className="text-lg font-medium">रु.{props.fare}</h3>
               <p className="text-sm -mt-1 text-gray-600">
                 On Cash
               </p>

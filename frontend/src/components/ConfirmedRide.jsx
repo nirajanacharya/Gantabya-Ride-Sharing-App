@@ -24,25 +24,25 @@ const ConfirmedRide = (props) => {
         <div className="flex items-center gap-5 p-3 border-b-2" >
           <i className="ri-user-location-fill"></i>
           <div>
-            <h3 className="text-lg font-medium">Thamel, Kathmandu</h3>
+            <h3 className="text-lg font-medium">5671/21</h3>
             <p className="text-sm -mt-1 text-gray-600">
-              Thamel, Kathmandu, street-432
+             {props.pickup}
             </p>
           </div>
         </div>
         <div className="flex items-center gap-5 p-3 border-b-2">
           <i className="ri-map-pin-line"></i>
           <div>
-            <h3 className="text-lg font-medium">Thamel, Kathmandu</h3>
+            <h3 className="text-lg font-medium">5671/21</h3>
             <p className="text-sm -mt-1 text-gray-600">
-              Thamel, Kathmandu, street-432
+              {props.destination}
             </p>
           </div>
         </div>
         <div className="flex items-center gap-5 p-3 ">
           <i className="ri-cash-line"></i>
           <div>
-            <h3 className="text-lg font-medium">Rs. 450</h3>
+            <h3 className="text-lg font-medium">रु.{props.fare}</h3>
             <p className="text-sm -mt-1 text-gray-600">
               On Cash
             </p>
@@ -53,6 +53,7 @@ const ConfirmedRide = (props) => {
         <button onClick={() => {
           props.setvehiclefound(true);
           props.setconfirmridepanel(false);
+          props.createRide();
         }} className="w-full mt-5 bg-green-600 text-white font-semibold p-2 rounded-lg">
           Confirm
         </button>
