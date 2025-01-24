@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import axios from "axios";
 import gsap from "gsap";
 import "remixicon/fonts/remixicon.css";
 import LocationSearchPanel from "../components/LocationSearchPanel.component";
@@ -26,8 +27,12 @@ const Home = () => {
   const panelRef = useRef(null);
   const panelCloseRef = useRef(null);
 
-  const [waitingfordriver, setwaitingfordriver] = useState(false)
-  const waitingfordriverRef = useRef(null)
+  const [ pickupSuggestions, setPickupSuggestions ] = useState([]);
+  const [ destinationSuggestions, setDestinationSuggestions ] = useState([]);
+
+  const [waitingfordriver, setwaitingfordriver] = useState(false);
+  const waitingfordriverRef = useRef(null);
+
   useEffect(() => {
     if (waitingfordriver && waitingfordriverRef.current) {
       gsap.to(waitingfordriverRef.current, { transform: "translateY(0%)" });
@@ -35,7 +40,6 @@ const Home = () => {
       gsap.to(waitingfordriverRef.current, { transform: "translateY(100%)" });
     }
   }, [waitingfordriver]);
-
 
   useEffect(() => {
     if (confirmridepanel && confirmridepanelRef.current) {
@@ -71,9 +75,58 @@ const Home = () => {
     }
   }, [vehiclefound]);
 
+  const handlePickupChange = async (e) => {
+    setpickup(e.target.value);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Token not found');
+      }
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions`, {
+        params: { query: e.target.value },
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setPickupSuggestions(response.data);
+      setpanelopen(true);
+    } catch (error) {
+      console.error('Error fetching pickup suggestions:', error);
+    }
+  };
+
+  const handleDestinationChange = async (e) => {
+    setdestination(e.target.value);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Token not found');
+      }
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions`, {
+        params: { query: e.target.value },
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setDestinationSuggestions(response.data);
+      setpanelopen(true);
+    } catch (error) {
+      console.error('Error fetching destination suggestions:', error);
+    }
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
     console.log("Pickup:", pickup, "Destination:", destination);
+  };
+
+  const handleSuggestionClick = (suggestion, type) => {
+    if (type === "pickup") {
+      setpickup(suggestion.name);
+    } else {
+      setdestination(suggestion.name);
+    }
+    setpanelopen(false);
   };
 
   return (
@@ -109,16 +162,14 @@ const Home = () => {
               className="bg-[#eee] px-12 py-2 text-base rounded-lg w-full mt-3"
               type="text"
               value={pickup}
-              onClick={() => setpanelopen(true)}
-              onChange={(e) => setpickup(e.target.value)}
+              onChange={handlePickupChange}
               placeholder="Add a pick-up location"
             />
             <input
               className="bg-[#eee] px-12 py-2 text-base rounded-lg w-full mt-4"
               type="text"
               value={destination}
-              onClick={() => setpanelopen(true)}
-              onChange={(e) => setdestination(e.target.value)}
+              onChange={handleDestinationChange}
               placeholder="Enter your destination"
             />
           </form>
@@ -130,7 +181,13 @@ const Home = () => {
           className="bg-white w-full overflow-hidden"
           style={{ height: "0%" }}
         >
-          <LocationSearchPanel setvehiclepanel={setvehiclepanel} setpanelopen={setpanelopen} />
+          <LocationSearchPanel 
+            suggestions={pickup ? pickupSuggestions : destinationSuggestions} 
+            handleSuggestionClick={handleSuggestionClick} 
+            type={pickup ? "pickup" : "destination"} 
+            setvehiclepanel={setvehiclepanel} 
+            setpanelopen={setpanelopen} 
+          />
         </div>
       </div>
       <div ref={vehiclepanelRef} className="fixed z-10 bottom-0 bg-white w-full p-3 translate-y-full">
@@ -142,7 +199,7 @@ const Home = () => {
       <div ref={vehiclefoundRef} className="fixed z-10 bottom-0 bg-white w-full p-3 translate-y-full">
         <LookingForDriver setvehiclefound={setvehiclefound}/>   
       </div>
-      <div   ref={waitingfordriverRef} className="fixed z-10 bottom-0 bg-white w-full p-3 translate-y-full ">
+      <div ref={waitingfordriverRef} className="fixed z-10 bottom-0 bg-white w-full p-3 translate-y-full ">
         <WaitingForDriver setwaitingfordriver={setwaitingfordriver} />   
       </div>
 
