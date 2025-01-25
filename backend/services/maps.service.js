@@ -1,4 +1,5 @@
 const axios = require('axios');
+const captainModel = require('../models/captain.model');
 
 module.exports.getAddressCoordinates = async (address) => {
     const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&limit=1`;
@@ -70,4 +71,17 @@ try
 } catch (error) {
     throw new Error('Unable to fetch location suggestions');
 }
+};
+
+
+module.exports.getCaptainInTheRadius = async (address, radius) => {
+    const coordinates = await module.exports.getAddressCoordinates(address);
+    const captains = await captainModel.find({
+        location: {
+            $geoWithin: {
+                $centerSphere: [[coordinates.lng, coordinates.ltd], radius / 6378.1]
+            }
+        }
+    });
+    return captains;
 };
