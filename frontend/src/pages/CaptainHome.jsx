@@ -1,85 +1,103 @@
-import React, { useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useGSAP } from '@gsap/react'
-import gsap from 'gsap'
-import GantabyaUser from '../assets/img/GantabyaUser-.png'
-import CaptainDetails from '../components/CaptainDetails'
-import RidePopUp from '../components/RidePopUp'
-import ConfirmRidePopUp from '../components/ConfirmRidePopUp'
-import { useEffect } from 'react'   
-import { SocketContext } from '../context/SocketContext'
-import { useContext } from 'react'
-import { CaptainDataContext } from '../context/CaptainContext'
+import React, { useRef, useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import GantabyaUser from '../assets/img/GantabyaUser-.png';
+import CaptainDetails from '../components/CaptainDetails';
+import RidePopUp from '../components/RidePopUp';
+import ConfirmRidePopUp from '../components/ConfirmRidePopUp';
+import { SocketContext } from '../context/SocketContext';
+import { CaptainDataContext } from '../context/CaptainContext';
+import axios from 'axios';
 
 const CaptainHome = () => {
+    const [ridepopuppanel, setridepopuppanel] = useState(false);
+    const ridepopuppanelRef = useRef(null);
 
-    const [ridepopuppanel, setridepopuppanel] = useState(true)
-    const ridepopuppanelRef = useRef(null)
+    const [confirmridepopuppanel, setconfirmridepopuppanel] = useState(false);
+    const confirmridepopuppanelRef = useRef(null);
 
-    const [confirmridepopuppanel, setconfirmridepopuppanel] = useState(false)
-    const confirmridepopuppanelRef = useRef(null)
+    const [ride, setRide] = useState(null);
 
-    const { captain } = useContext(CaptainDataContext)
-    const { socket } = useContext(SocketContext)
-    
-    useEffect(() => {   
+    const { captain } = useContext(CaptainDataContext);
+    const { socket } = useContext(SocketContext);
+
+    useEffect(() => {
         socket.emit('join', {
             userId: captain._id,
             userType: 'captain'
+        });
 
-        })
-
-        const updateLocation =()=>{
-            if(navigator.geolocation){
-                navigator.geolocation.getCurrentPosition((position)=>{
+        const updateLocation = () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
                     console.log({
                         userId: captain._id,
                         location: {
                             ltd: position.coords.latitude,
                             lng: position.coords.longitude
                         }
-                    })
+                    });
                     socket.emit('update-location-captain', {
                         userId: captain._id,
                         location: {
                             ltd: position.coords.latitude,
                             lng: position.coords.longitude
                         }
-                    })
-                })
+                    });
+                });
             }
-        }
-        const locationInterval = setInterval(updateLocation, 10000)
-        updateLocation()
-        // return () => clearInterval(locationInterval)
-        
-    })
-    
-    useGSAP(function () {
+        };
+        const locationInterval = setInterval(updateLocation, 10000);
+        updateLocation();
+        return () => clearInterval(locationInterval);
+    }, [captain._id, socket]);
+
+    socket.on('new-ride', (data) => {
+        console.log(data);
+        setRide(data);
+        setridepopuppanel(true);
+    });
+
+    async function confirmRide() {
+        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/confirm`, {
+            rideId: ride._id,
+            captainId: captain._id,
+        }, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+
+        socket.emit('ride-confirmed', ride);
+
+        setridepopuppanel(false);
+        setconfirmridepopuppanel(true);
+    }
+
+    useGSAP(() => {
         if (confirmridepopuppanel) {
             gsap.to(confirmridepopuppanelRef.current, {
                 transform: 'translateY(0)'
-            })
+            });
         } else {
             gsap.to(confirmridepopuppanelRef.current, {
                 transform: 'translateY(100%)'
-            })
+            });
         }
-    }, [ confirmridepopuppanel ])
-   
+    }, [confirmridepopuppanel]);
 
-    useGSAP(function () {
+    useGSAP(() => {
         if (ridepopuppanel) {
             gsap.to(ridepopuppanelRef.current, {
                 transform: 'translateY(0)'
-            })
+            });
         } else {
             gsap.to(ridepopuppanelRef.current, {
                 transform: 'translateY(100%)'
-            })
+            });
         }
-    }, [ ridepopuppanel ])
-
+    }, [ridepopuppanel]);
 
     return (
         <div className="h-screen">
@@ -98,9 +116,11 @@ const CaptainHome = () => {
             <div className='h-2/5 p-6'>
                 <CaptainDetails />
             </div>
-            <div ref={ridepopuppanelRef}  className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
+            <div ref={ridepopuppanelRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
                 <RidePopUp
+                    ride={ride}
                     setridepopuppanel={setridepopuppanel}
+                    confirmRide={confirmRide}
                     setconfirmridepopuppanel={setconfirmridepopuppanel}
                 />
             </div>
@@ -112,4 +132,4 @@ const CaptainHome = () => {
     );
 }
 
-export default CaptainHome
+export default CaptainHome;

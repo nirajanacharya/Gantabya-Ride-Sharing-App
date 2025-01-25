@@ -12,7 +12,6 @@ import WaitingForDriver from "../components/WaitingForDriver";
 import { useContext } from "react";
 import { SocketContext } from "../context/SocketContext";
 import { UserDataContext } from "../context/UserContext";
-import { use } from "react";
 
 const Home = () => {
   const [pickup, setpickup] = useState("");
@@ -41,14 +40,29 @@ const Home = () => {
 
   const [vehicleType, setvehicleType] = useState(null);
 
+  const [ride, setride] = useState(null);
+
   const [fare, setfare] = useState({});
 
-const { socket } = useContext(SocketContext);
-const { user } = useContext(UserDataContext);
+  const { socket } = useContext(SocketContext);
+  const { user } = useContext(UserDataContext);
 
-useEffect(() => {
-  socket.emit("join", {userType: "user", userId: user._id});
-}, [user]);
+  useEffect(() => {
+    socket.emit("join", { userType: "user", userId: user._id });
+  }, [user]);
+  
+  useEffect(() => {
+    socket.on('ride-confirmed', (ride) => {
+      setvehiclefound(false);
+      setwaitingfordriver(true);
+      setride(ride);
+    });
+  
+    // Clean up the event listener
+    return () => {
+      socket.off('ride-confirmed');
+    };
+  }, [socket]);
 
   useEffect(() => {
     if (waitingfordriver && waitingfordriverRef.current) {
@@ -343,7 +357,12 @@ useEffect(() => {
         ref={waitingfordriverRef}
         className="fixed z-10 bottom-0 bg-white w-full p-3 translate-y-full "
       >
-        <WaitingForDriver setwaitingfordriver={setwaitingfordriver} />
+        <WaitingForDriver
+          ride={ride}
+          setvehiclefound={setvehiclefound}
+          waitingfordriver={waitingfordriver}
+          setwaitingfordriver={setwaitingfordriver}
+        />
       </div>
     </div>
   );

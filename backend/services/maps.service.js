@@ -73,15 +73,19 @@ try
 }
 };
 
+module.exports.getCaptainInTheRadius = async (ltd, lng, radius) => {
 
-module.exports.getCaptainInTheRadius = async (address, radius) => {
-    const coordinates = await module.exports.getAddressCoordinates(address);
-    const captains = await captainModel.find({
+    // radius in km
+
+const captains = await captainModel.find({
         location: {
             $geoWithin: {
-                $centerSphere: [[coordinates.lng, coordinates.ltd], radius / 6378.1]
+                $centerSphere: [ [ ltd, lng ], radius / 6371 ]
             }
         }
     });
+
     return captains;
-};
+
+
+}
