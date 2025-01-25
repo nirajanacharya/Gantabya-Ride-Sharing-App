@@ -339,6 +339,7 @@ const Home = () => {
           createRide={createRide}
           setconfirmridepanel={setconfirmridepanel}
           setvehiclefound={setvehiclefound}
+          setwaitingfordriver={setwaitingfordriver}
         />
       </div>
       <div
