@@ -17,7 +17,7 @@ const CaptainSignup = () => {
   const [vehicleplate, setVehiclePlate] = useState('');
 
   const [errors, setErrors] = useState({});
-  const { updateCaptain } = useContext(CaptainDataContext); // Use updateCaptain instead of setCaptain
+  const{ captain, setCaptain } = React.useContext(CaptainDataContext) // Use updateCaptain instead of setCaptain
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -53,22 +53,22 @@ const CaptainSignup = () => {
         localStorage.setItem('token', data.token);
 
         // Set captain data in context
-        updateCaptain(data); // Use updateCaptain to set the captain data
+        setCaptain(data.captain); // Use updateCaptain to set the captain data
 
         // Navigate to captain home
         navigate('/captain-home');
+        setFirstname('');
+        setLastname('');
+        setEmail('');
+        setPassword('');
+        setVehicleColor('');
+        setVehicleType('');
+        setVehicleCapacity('');
+        setVehiclePlate('');
       }
-    } catch (err) {
-      console.error('Error during registration:', err);
-      if (err.response && err.response.data.errors) {
-        const fieldErrors = err.response.data.errors.reduce((acc, error) => {
-          acc[error.path] = error.msg;
-          return acc;
-        }, {});
-        setErrors(fieldErrors);
-      } else {
-        console.error('Unexpected error:', err);
-      }
+    } catch (error) {
+      console.error('Error during registration:', error.response?.data || error.message);
+      setErrors(error.response?.data?.message || {});
     }
   };
 
@@ -181,5 +181,6 @@ const CaptainSignup = () => {
     </div>
   );
 };
+
 
 export default CaptainSignup;

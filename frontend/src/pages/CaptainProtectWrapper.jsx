@@ -1,54 +1,57 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { CaptainDataContext } from '../context/CaptainContext';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react'
+import { CaptainDataContext } from '../context/CaptainContext'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
-const CaptainProtectWrapper = ({ children }) => {
-    const { captain, updateCaptain } = useContext(CaptainDataContext); // Extract captain from context
-    const [isLoading, setisLoading] = useState(true);
-    const navigate = useNavigate();
+const CaptainProtectWrapper = ({
+    children
+}) => {
+
+    const token = localStorage.getItem('token')
+    const navigate = useNavigate()
+    const { captain, setCaptain } = useContext(CaptainDataContext)
+    const [ isLoading, setIsLoading ] = useState(true)
+
+
+
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-
-
         if (!token) {
-            // No token, redirect to login immediately
-            navigate('/captain-login');
-            return;
+            navigate('/captain-login')
         }
 
-        // Token exists, fetch captain's profile
-        axios
-            .get(`${import.meta.env.VITE_BASE_URL}/captains/profile`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+        axios.get(`${import.meta.env.VITE_BASE_URL}/captains/profile`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response => {
+            if (response.status === 200) {
+                setCaptain(response.data.captain)
+                setIsLoading(false)
+            }
+        })
+            .catch(err => {
+
+                localStorage.removeItem('token')
+                navigate('/captain-login')
             })
-            .then((response) => {
-                updateCaptain(response.data);
-                setisLoading(false); // Loading is complete
-            })
-            .catch((error) => {
-                console.error('Error fetching captain profile:', error.response?.data || error.message);
-                if (error.response?.status === 401) {
-                    localStorage.removeItem('token');
-                    navigate('/captain-login');
-                } else {
-                    setisLoading(false); // Handle other errors and stop loading
-                }
-            });
-    }, [navigate, updateCaptain]);
+    }, [ token ])
+
+    
 
     if (isLoading) {
-        return <div>Loading...</div>; // Show loading state while checking the token/profile
+        return (
+            <div>Loading...</div>
+        )
     }
 
-    if (!captain) {
-        return null; // Prevent rendering children if captain is not set
-    }
 
-    return <div>{children}</div>;
-};
 
-export default CaptainProtectWrapper;
+    return (
+        <>
+            {children}
+        </>
+    )
+}
+
+export default CaptainProtectWrapper

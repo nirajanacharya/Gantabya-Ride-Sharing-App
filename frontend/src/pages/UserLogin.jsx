@@ -9,7 +9,7 @@ const UserLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { user, setuser } = useContext(UserDataContext);
+  const { user, setUser } = useContext(UserDataContext);
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
@@ -31,7 +31,7 @@ const UserLogin = () => {
       if (response.status === 200) {
         console.log("Login successful:", response.data);
         const data = response.data; 
-        setuser(data.user);
+        setUser(data.user);
         localStorage.setItem('token',data.token);
         navigate("/home");
         setEmail("");

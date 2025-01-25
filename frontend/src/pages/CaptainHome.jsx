@@ -6,6 +6,10 @@ import GantabyaUser from '../assets/img/GantabyaUser-.png'
 import CaptainDetails from '../components/CaptainDetails'
 import RidePopUp from '../components/RidePopUp'
 import ConfirmRidePopUp from '../components/ConfirmRidePopUp'
+import { useEffect } from 'react'   
+import { SocketContext } from '../context/SocketContext'
+import { useContext } from 'react'
+import { CaptainDataContext } from '../context/CaptainContext'
 
 const CaptainHome = () => {
 
@@ -14,6 +18,17 @@ const CaptainHome = () => {
 
     const [confirmridepopuppanel, setconfirmridepopuppanel] = useState(false)
     const confirmridepopuppanelRef = useRef(null)
+
+    const { captain } = useContext(CaptainDataContext)
+    const { socket } = useContext(SocketContext)
+    
+    useEffect(() => {   
+        socket.emit('join', {
+            userId: captain._id,
+            userType: 'captain'
+
+        })
+    })
     
     useGSAP(function () {
         if (confirmridepopuppanel) {

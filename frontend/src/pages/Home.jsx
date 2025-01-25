@@ -47,7 +47,6 @@ const { socket } = useContext(SocketContext);
 const { user } = useContext(UserDataContext);
 
 useEffect(() => {
-  console.log("User:", user);
   socket.emit("join", {userType: "user", userId: user._id});
 }, [user]);
 

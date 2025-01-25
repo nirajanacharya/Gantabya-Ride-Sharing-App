@@ -23,8 +23,9 @@ function initializeSocket(server) {
             
             if (userType === 'user') {
                 await userModel.findByIdAndUpdate(userId, { socketId: socket.id });
+                
             } else if (userType === 'captain') {
-                await captainModel.findByIdAndUpdate(userId, { socketId: socket.id });
+                 await captainModel.findByIdAndUpdate(userId, { socketId: socket.id });
             }
         });
 
