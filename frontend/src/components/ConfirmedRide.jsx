@@ -9,7 +9,7 @@ const ConfirmedRide = (props) => {
       <h5
         className="flex justify-center"
         onClick={() =>{ props.setconfirmridepanel(false)
-          props.setvehiclefound(true)
+          props.setwaitingfordriver(true)
         }
   
         }

@@ -48,7 +48,7 @@ const RidePopUp = (props) => {
         </div>
         <div className='flex w-full gap-4 mt-4'>
           <button onClick={() => {props.setconfirmridepopuppanel(true)
-            props.confirmRide
+            props.confirmRide();
           }}
                   className='flex-1 bg-green-600 text-white font-semibold p-3 rounded-lg hover:bg-green-700 transition-colors'>
             Accept

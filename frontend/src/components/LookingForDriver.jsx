@@ -6,7 +6,8 @@ const LookingForDriver = (props) => {
   <div>
         <h5
           className="flex justify-center"
-          onClick={() => props.setvehiclefound(false)}
+          onClick={() => {props.setvehiclefound(false)
+          }}
         >
           <i className="text-3xl ri-arrow-down-s-line text-gray-300"></i>
         </h5>
