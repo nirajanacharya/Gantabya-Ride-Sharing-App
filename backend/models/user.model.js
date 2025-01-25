@@ -30,7 +30,6 @@ password:{
 },
 socketId:{
     type:String,
-    default:null
 },   
 })
 

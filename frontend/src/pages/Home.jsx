@@ -9,6 +9,10 @@ import ConfirmedRide from "../components/ConfirmedRide";
 import GantabyaUser from "../assets/img/GantabyaUser-.png";
 import LookingForDriver from "../components/LookingForDriver";
 import WaitingForDriver from "../components/WaitingForDriver";
+import { useContext } from "react";
+import { SocketContext } from "../context/SocketContext";
+import { UserDataContext } from "../context/UserContext";
+import { use } from "react";
 
 const Home = () => {
   const [pickup, setpickup] = useState("");
@@ -38,6 +42,14 @@ const Home = () => {
   const [vehicleType, setvehicleType] = useState(null);
 
   const [fare, setfare] = useState({});
+
+const { socket } = useContext(SocketContext);
+const { user } = useContext(UserDataContext);
+
+useEffect(() => {
+  console.log("User:", user);
+  socket.emit("join", {userType: "user", userId: user._id});
+}, [user]);
 
   useEffect(() => {
     if (waitingfordriver && waitingfordriverRef.current) {
