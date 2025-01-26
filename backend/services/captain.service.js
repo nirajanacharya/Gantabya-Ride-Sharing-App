@@ -29,3 +29,9 @@ module.exports.createCaptain = async ({ fullname, email, password, vehicle }) =>
     });
     return captain;
 };
+
+
+
+
+
+
