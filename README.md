@@ -46,9 +46,12 @@ Gantabya is a ride-sharing platform that allows users to book rides with captain
 ![Home Page](frontend/src/assets/ReadmeImage/Screenshot%202025-01-26%20120550.png)
 
 ### User Login
-![User Login](frontend/src/assets/ReadmeImage/Screenshot%202025-01-26%20120550.pngS)
+![User Login](frontend/src/assets/ReadmeImage/Screenshot%202025-01-26%20120605.png)
 
+
+### User Home
+![User Home](frontend/src/assets/ReadmeImage/Screenshot%202025-01-26%20120648.png)
 
 ### Captain Home
-![Captain Home](frontend/src/assets/ReadmeImage/Screenshot%202025-01-26%20120550.png)
+![User Home](frontend/src/assets/ReadmeImage/Screenshot%202025-01-26%20120711.png)
 
