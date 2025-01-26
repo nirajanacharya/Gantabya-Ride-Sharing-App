@@ -5,13 +5,29 @@ import { useNavigate } from 'react-router-dom'
 
 const ConfirmRidePopUp = (props) => {
     const [ otp, setOtp ] = useState('')
+    const navigate = useNavigate()
 
-    const submithandler = async (e) => {
+    const submitHander = async (e) => {
         e.preventDefault()
-        
+
+        const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/start-ride`, {
+            params: {
+                rideId: props.ride._id,
+                otp: otp
+            },
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+
+        if (response.status === 200) {
+            props.setConfirmRidePopupPanel(false)
+            props.setridepopuppanel(false)
+            navigate('/captain-riding', { state: { ride: props.ride } })
+        }
+
+
     }
-
-
     return (
         <div>
             <h5 className='p-1 text-center w-[93%] absolute top-0' onClick={() => {
@@ -44,21 +60,19 @@ const ConfirmRidePopUp = (props) => {
                     <div className='flex items-center gap-5 p-3'>
                         <i className="ri-currency-line"></i>
                         <div>
-                            <h3 className='text-lg font-medium'>Rs.{props.ride?.fare} </h3>
+                            <h3 className='text-lg font-medium'>₹{props.ride?.fare} </h3>
                             <p className='text-sm -mt-1 text-gray-600'>Cash Cash</p>
                         </div>
                     </div>
                 </div>
 
                 <div className='mt-6 w-full'>
-                    <form  onSubmit={(e)=>{
-                        submithandler(e);
-                    }}>
-                        <input value={otp} onChange={(e)=>{setOtp(e.target.value)}}  type="text" className='bg-[#eee] px-6 py-4 font-mono text-lg rounded-lg w-full mt-3' placeholder='Enter OTP' />
+                    <form onSubmit={submitHander}>
+                        <input value={otp} onChange={(e) => setOtp(e.target.value)} type="text" className='bg-[#eee] px-6 py-4 font-mono text-lg rounded-lg w-full mt-3' placeholder='Enter OTP' />
 
-                        <button  className='w-full mt-5 text-lg flex justify-center bg-green-600 text-white font-semibold p-3 rounded-lg'>Confirm</button>
+                        <button className='w-full mt-5 text-lg flex justify-center bg-green-600 text-white font-semibold p-3 rounded-lg'>Confirm</button>
                         <button onClick={() => {
-                            props.setconfirmridepopuppanel(false)
+                            props.setConfirmRidePopupPanel(false)
                             props.setridepopuppanel(false)
 
                         }} className='w-full mt-2 bg-red-600 text-lg text-white font-semibold p-3 rounded-lg'>Cancel</button>

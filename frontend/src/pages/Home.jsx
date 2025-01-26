@@ -12,8 +12,12 @@ import WaitingForDriver from "../components/WaitingForDriver";
 import { useContext } from "react";
 import { SocketContext } from "../context/SocketContext";
 import { UserDataContext } from "../context/UserContext";
+import {useNavigate} from 'react-router-dom'; 
 
 const Home = () => {
+
+  const navigate = useNavigate(); 
+
   const [pickup, setpickup] = useState("");
   const [destination, setdestination] = useState("");
   const [pickupPanelOpen, setPickupPanelOpen] = useState(false);
@@ -63,6 +67,11 @@ const Home = () => {
       socket.off('ride-confirmed');
     };
   }, [socket]);
+
+  socket.on("ride-started", ride => {
+    setwaitingfordriver(false);
+    navigate('/riding');
+  });
 
   useEffect(() => {
     if (waitingfordriver && waitingfordriverRef.current) {

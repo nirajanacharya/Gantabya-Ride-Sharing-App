@@ -53,12 +53,18 @@ const CaptainHome = () => {
         return () => clearInterval(locationInterval);
     }, [captain._id, socket]);
 
-    socket.on('new-ride', (data) => {
-        console.log(data);
-        setRide(data);
-        setridepopuppanel(true);
-    });
-
+    useEffect(() => {
+        socket.on('new-ride', (data) => {
+            console.log('New ride received:', data); // Add this line for debugging
+            setRide(data);
+            setridepopuppanel(true);
+        });
+    
+        // Clean up the event listener
+        return () => {
+            socket.off('new-ride');
+        };
+    }, [socket]);
 
     async function confirmRide() {
         const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/confirm`, {
@@ -127,8 +133,9 @@ const CaptainHome = () => {
             </div>
             <div ref={confirmridepopuppanelRef} className='fixed w-full h-screen z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
                 <ConfirmRidePopUp
-                ride={ride}
-                setConfirmRidePopupPanel={setconfirmridepopuppanel} setridepopuppanel={setridepopuppanel} />
+                    ride={ride}
+                    setConfirmRidePopupPanel={setconfirmridepopuppanel}
+                     setridepopuppanel={setridepopuppanel} />
             </div>
         </div>
     );

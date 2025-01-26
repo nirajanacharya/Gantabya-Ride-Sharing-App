@@ -19,4 +19,8 @@ router.get('/get-fare',authMiddleware.authUser,[
 router.post('/confirm',authMiddleware.authCaptain,
     body('rideId').isMongoId().withMessage('Ride ID is required'),rideController.confirmRide);
 
+
+router.get('/start-ride',authMiddleware.authCaptain,[query('rideId').isMongoId().withMessage('Ride ID is required'),
+],rideController.startRide);
+
 module.exports = router;
