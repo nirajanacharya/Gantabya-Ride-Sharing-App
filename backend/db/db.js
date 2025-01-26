@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 
 function connectToDb() {
@@ -9,3 +10,4 @@ function connectToDb() {
 }
 
 module.exports = connectToDb;
+
