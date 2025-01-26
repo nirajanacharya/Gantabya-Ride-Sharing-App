@@ -1,602 +1,64 @@
+nirajanacharya: @workspace can you create a beautiful readme, don't mention routes because it will be published through postman 
 
+but i want you to create a overall Gantabya ride sharing web with place to put images 
 
 
-(for reference of design: https://flash.figr.design/explore/mobile/Apps/Uber)
 
+Workspace: Collecting workspace information
 
+Sure! Here is a beautiful README for the Gantabya ride-sharing web application:
 
-![Screenshot 2025-01-11 190215](https://github.com/user-attachments/assets/bf5d2719-7f82-439b-8a6a-7512f9e12b01)
-![Screenshot 2025-01-11 190204](https://github.com/user-attachments/assets/93ffb8d7-c2fd-441f-bb16-ffc6ddb89d29)
-![Screenshot 2025-01-11 190157](https://github.com/user-attachments/assets/2736bbbf-6d3c-472a-963d-a2018bfefc34)
-![Screenshot 2025-01-11 190226](https://github.com/user-attachments/assets/62075c08-7c6d-499e-8290-372f23f7091f)
+# Gantabya Ride Sharing Web Application
 
+Welcome to Gantabya, a ride-sharing web application designed to connect users with captains for a seamless and efficient transportation experience.
 
-# API Documentation
+## Table of Contents
 
-## Users Endpoints
+- Introduction
+- Features
+- Technologies Used
+- Installation
+- Usage
+- Screenshots
+- Contributing
+- License
 
-### Endpoint: `/users/register`
+## Introduction
 
-#### Method: POST
+Gantabya is a ride-sharing platform that allows users to book rides with captains in real-time. Whether you need a quick ride to your destination or want to explore the city, Gantabya has got you covered.
 
-#### Description:
-This endpoint is used to register a new user. It validates the input data, hashes the user's password, creates a new user in the database, and returns a JSON Web Token (JWT) along with the user data.
+## Features
 
-#### Request Body:
-The request body should be a JSON object with the following structure:
+- **User Registration and Login**: Secure user authentication and registration.
+- **Captain Registration and Login**: Captains can register and log in to offer their services.
+- **Real-time Ride Booking**: Users can book rides and get matched with nearby captains.
+- **Fare Estimation**: Get fare estimates for your rides based on pickup and destination locations.
+- **Ride Tracking**: Track your ride in real-time and stay updated on your captain's location.
+- **Secure Payments**: Make payments securely through the platform.
 
-```json
-{
-  "fullname": {
-    "firstname": "string (min: 3 characters, required)",
-    "lastname": "string (min: 3 characters, optional)"
-  },
-  "email": "string (valid email format, required)",
-  "password": "string (min: 6 characters, required)"
-}
-```
+## Technologies Used
 
-#### Responses:
+- **Frontend**: React, Tailwind CSS, GSAP, Socket.IO
+- **Backend**: Node.js, Express, MongoDB, Mongoose, JWT, bcrypt
+- **APIs**: OpenStreetMap, OSRM
+- **Build Tools**: Vite
 
-##### 201 Created
+## Usage
 
-```json
-{
-  "token": "jwt_token_here",
-  "user": {
-    "_id": "user_id",
-    "fullname": {
-      "firstname": "First",
-      "lastname": "Last"
-    },
-    "email": "user@example.com"
-    // ...other user fields...
-  }
-}
-```
+1. **User Registration**: Sign up as a user to start booking rides.
+2. **Captain Registration**: Sign up as a captain to offer ride services.
+3. **Book a Ride**: Enter your pickup and destination locations to book a ride.
+5. **Make Payments**: Pay on cash.
 
-**Example Response:**
+## Screenshots
 
-```json
-{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "user": {
-    "_id": "60f5a3a5b4d1c826d8d3e8a1",
-    "fullname": {
-      "firstname": "Jane",
-      "lastname": "Doe"
-    },
-    "email": "jane.doe@example.com"
-    // ...other user fields...
-  }
-}
-```
+### Home Page
+![Home Page](frontend/src/assets/ReadmeImage/Screenshot%202025-01-26%20120550.png)
 
-##### 400 Bad Request
+### User Login
+![User Login](frontend/src/assets/ReadmeImage/Screenshot%202025-01-26%20120550.pngS)
 
-```json
-{
-  "errors": [
-    {
-      "msg": "Invalid Email",
-      "param": "email",
-      "location": "body"
-    }
-    // ...other validation errors...
-  ]
-}
-```
 
-**Example Response:**
+### Captain Home
+![Captain Home](frontend/src/assets/ReadmeImage/Screenshot%202025-01-26%20120550.png)
 
-```json
-{
-  "errors": [
-    {
-      "msg": "Invalid Email",
-      "param": "email",
-      "location": "body"
-    }
-  ]
-}
-```
-
-### Endpoint: `/users/login`
-
-#### Method: POST
-
-#### Description:
-This endpoint is used to log in an existing user. It validates the input data, checks the user's credentials, and returns a JSON Web Token (JWT) along with the user data.
-
-#### Request Body:
-The request body should be a JSON object with the following structure:
-
-```json
-{
-  "email": "string (valid email format, required)",
-  "password": "string (min: 6 characters, required)"
-}
-```
-
-
-
-#### Responses:
-
-
-
-
-
-##### 200 OK
-
-```json
-{
-  "token": "jwt_token_here",
-  "user": {
-    "_id": "user_id",
-    "fullname": {
-      "firstname": "First",
-      "lastname": "Last"
-    },
-    "email": "user@example.com"
-    // ...other user fields...
-  }
-}
-```
-
-**Example Response:**
-
-```json
-{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "user": {
-    "_id": "60f5a3a5b4d1c826d8d3e8a1",
-    "fullname": {
-      "firstname": "Jane",
-      "lastname": "Doe"
-    },
-    "email": "jane.doe@example.com"
-    // ...other user fields...
-  }
-}
-```
-
-##### 400 Bad Request
-
-```json
-{
-  "errors": [
-    {
-      "msg": "Invalid Email",
-      "param": "email",
-      "location": "body"
-    }
-    // ...other validation errors...
-  ]
-}
-```
-
-**Example Response:**
-
-```json
-{
-  "errors": [
-    {
-      "msg": "Invalid Email",
-      "param": "email",
-      "location": "body"
-    }
-  ]
-}
-```
-
-##### 401 Unauthorized
-
-```json
-{
-  "message": "Invalid Email or Password"
-}
-```
-
-**Example Response:**
-
-```json
-{
-  "message": "Invalid Email or Password"
-}
-```
-
-### Endpoint: `/users/profile`
-
-#### Method: GET
-
-#### Description:
-This endpoint is used to get the profile of the authenticated user.
-
-#### Responses:
-
-##### 200 OK
-
-```json
-{
-  "_id": "user_id",
-  "fullname": {
-    "firstname": "First",
-    "lastname": "Last"
-  },
-  "email": "user@example.com"
-  // ...other user fields...
-}
-```
-
-### Endpoint: `/users/logout`
-
-#### Method: GET
-
-#### Description:
-This endpoint is used to log out the authenticated user by clearing the token and blacklisting it.
-
-#### Responses:
-
-##### 200 OK
-
-```json
-{
-  "message": "Logged out successfully"
-}
-```
-
-## Captains Endpoints
-
-### Endpoint: `/captains/register`
-
-#### Method: POST
-
-#### Description:
-This endpoint is used to register a new captain. It validates the input data, hashes the captain's password, creates a new captain in the database, and returns a JSON Web Token (JWT) along with the captain data.
-
-#### Request Body:
-The request body should be a JSON object with the following structure:
-
-```json
-{
-  "fullname": {
-    "firstname": "string (min: 3 characters, required)",
-    "lastname": "string (min: 3 characters, optional)"
-  },
-  "email": "string (valid email format, required)",
-  "password": "string (min: 6 characters, required)",
-  "vehicle": {
-    "color": "string (min: 3 characters, required)",
-    "plate": "string (min: 3 characters, required)",
-    "capacity": "number (min: 1, required)",
-    "vehicleType": "string (one of ['car', 'motorcycle', 'auto'], required)"
-  }
-}
-```
-
-#### Responses:
-
-##### 201 Created
-
-```json
-{
-  "token": "jwt_token_here",
-  "captain": {
-    "_id": "captain_id",
-    "fullname": {
-      "firstname": "First",
-      "lastname": "Last"
-    },
-    "email": "captain@example.com",
-    "vehicle": {
-      "color": "Red",
-      "plate": "ABC123",
-      "capacity": 4,
-      "vehicleType": "car"
-    }
-    // ...other captain fields...
-  }
-}
-```
-
-**Example Response:**
-
-```json
-{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "captain": {
-    "_id": "60f5a3a5b4d1c826d8d3e8a1",
-    "fullname": {
-      "firstname": "John",
-      "lastname": "Doe"
-    },
-    "email": "john.doe@example.com",
-    "vehicle": {
-      "color": "Red",
-      "plate": "ABC123",
-      "capacity": 4,
-      "vehicleType": "car"
-    }
-    // ...other captain fields...
-  }
-}
-```
-
-##### 400 Bad Request
-
-```json
-{
-  "errors": [
-    {
-      "msg": "Invalid Email",
-      "param": "email",
-      "location": "body"
-    }
-    // ...other validation errors...
-  ]
-}
-```
-
-**Example Response:**
-
-```json
-{
-  "errors": [
-    {
-      "msg": "Invalid Email",
-      "param": "email",
-      "location": "body"
-    }
-  ]
-}
-```
-##### 401 Unauthorized
-
-```json
-{
-  "message": "Invalid Email or Password"
-}
-```
-
-**Example Response:**
-
-```json
-{
-  "message": "Invalid Email or Password"
-}
-```
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-### Endpoint: `/captains/login`
-
-#### Method: POST
-
-#### Description:
-This endpoint is used to log in an existing captain. It validates the input data, checks the captain's credentials, and returns a JSON Web Token (JWT) along with the captain data.
-
-#### Request Body:
-The request body should be a JSON object with the following structure:
-
-```json
-{
-  "email": "string (valid email format, required)",
-  "password": "string (min: 6 characters, required)"
-}
-```
-
-#### Responses:
-
-##### 200 OK
-
-```json
-{
-  "token": "jwt_token_here",
-  "captain": {
-    "_id": "captain_id",
-    "fullname": {
-      "firstname": "First",
-      "lastname": "Last"
-    },
-    "email": "captain@example.com",
-    "vehicle": {
-      "color": "Red",
-      "plate": "ABC123",
-      "capacity": 4,
-      "vehicleType": "car"
-    }
-    // ...other captain fields...
-  }
-}
-```
-
-**Example Response:**
-
-```json
-{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "captain": {
-    "_id": "60f5a3a5b4d1c826d8d3e8a1",
-    "fullname": {
-      "firstname": "John",
-      "lastname": "Doe"
-    },
-    "email": "john.doe@example.com",
-    "vehicle": {
-      "color": "Red",
-      "plate": "ABC123",
-      "capacity": 4,
-      "vehicleType": "car"
-    }
-    // ...other captain fields...
-  }
-}
-```
-
-##### 400 Bad Request
-
-```json
-{
-  "errors": [
-    {
-      "msg": "Invalid Email",
-      "param": "email",
-      "location": "body"
-    }
-    // ...other validation errors...
-  ]
-}
-```
-
-**Example Response:**
-
-```json
-{
-  "errors": [
-    {
-      "msg": "Invalid Email",
-      "param": "email",
-      "location": "body"
-    }
-  ]
-}
-```
-
-##### 401 Unauthorized
-
-```json
-{
-  "message": "Invalid Email or Password"
-}
-```
-
-**Example Response:**
-
-```json
-{
-  "message": "Invalid Email or Password"
-}
-```
-
-### Endpoint: `/captains/profile`
-
-#### Method: GET
-
-#### Description:
-This endpoint is used to get the profile of the authenticated captain.
-
-#### Responses:
-
-##### 200 OK
-
-```json
-{
-  "_id": "captain_id",
-  "fullname": {
-    "firstname": "First",
-    "lastname": "Last"
-  },
-  "email": "captain@example.com",
-  "vehicle": {
-    "color": "Red",
-    "plate": "ABC123",
-    "capacity": 4,
-    "vehicleType": "car"
-  }
-  // ...other captain fields...
-}
-```
-
-### Endpoint: `/captains/logout`
-
-#### Method: GET
-
-#### Description:
-This endpoint is used to log out the authenticated captain by clearing the token and blacklisting it.
-
-#### Responses:
-
-##### 200 OK
-
-```json
-{
-  "message": "Logged out successfully"
-}
-```
-### Endpoint: `/rides/get-fare`
-
-#### Method: GET
-
-#### Description:
-This endpoint is used to get the fare estimate for a ride based on the pickup and destination locations.
-
-#### Query Parameters:
-The request should include the following query parameters:
-
-```json
-{
-  "pickup": "string (required)",
-  "destination": "string (required)"
-}
-```
-
-#### Responses:
-
-##### 200 OK
-
-```json
-{
-  "auto": "number (fare for auto)",
-  "car": "number (fare for car)",
-  "motorcycle": "number (fare for motorcycle)"
-}
-```
-
-**Example Response:**
-
-```json
-{
-  "auto": 150.5,
-  "car": 250.75,
-  "motorcycle": 100.25
-}
-```
-
-##### 400 Bad Request
-
-```json
-{
-  "errors": [
-    {
-      "msg": "Pickup location is required",
-      "param": "pickup",
-      "location": "query"
-    },
-    {
-      "msg": "Destination is required",
-      "param": "destination",
-      "location": "query"
-    }
-  ]
-}
-```
-
-**Example Response:**
-
-```json
-{
-  "errors": [
-    {
-      "msg": "Pickup location is required",
-      "param": "pickup",
-      "location": "query"
-    },
-    {
-      "msg": "Destination is required",
-      "param": "destination",
-      "location": "query"
-    }
-  ]
-}
-```
-```
