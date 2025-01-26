@@ -1,11 +1,20 @@
 import React from "react";
 import car from "../assets/img/car.png";
 import { Link, useLocation } from 'react-router-dom'
+import {SocketContext} from '../context/SocketContext'
+import { useContext } from "react";
+import { useEffect } from "react";  
+import { useNavigate } from 'react-router-dom'
 
 const Riding = () => {
 
   const location = useLocation()
   const { ride } = location.state || {} 
+  const { socket } = useContext(SocketContext)
+  const navigate = useNavigate()
+  socket.on("ride-ended", () => {
+    navigate('/home')
+})
 
   return (
     <div className="h-screen">
