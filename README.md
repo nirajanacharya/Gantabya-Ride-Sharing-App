@@ -1,12 +1,4 @@
-nirajanacharya: @workspace can you create a beautiful readme, don't mention routes because it will be published through postman 
 
-but i want you to create a overall Gantabya ride sharing web with place to put images 
-
-
-
-Workspace: Collecting workspace information
-
-Sure! Here is a beautiful README for the Gantabya ride-sharing web application:
 
 # Gantabya Ride Sharing Web Application
 
@@ -20,8 +12,6 @@ Welcome to Gantabya, a ride-sharing web application designed to connect users wi
 - Installation
 - Usage
 - Screenshots
-- Contributing
-- License
 
 ## Introduction
 
