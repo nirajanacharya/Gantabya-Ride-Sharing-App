@@ -12,13 +12,13 @@ import WaitingForDriver from "../components/WaitingForDriver";
 import { useContext } from "react";
 import { SocketContext } from "../context/SocketContext";
 import { UserDataContext } from "../context/UserContext";
-import {useNavigate} from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import map from '../assets/img/map.png'
 
 const Home = () => {
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const [pickup, setpickup] = useState("");
   const [destination, setdestination] = useState("");
@@ -56,14 +56,14 @@ const Home = () => {
   useEffect(() => {
     socket.emit("join", { userType: "user", userId: user._id });
   }, [user]);
-  
+
   useEffect(() => {
     socket.on('ride-confirmed', (ride) => {
       setvehiclefound(false);
       setwaitingfordriver(true);
       setride(ride);
     });
-  
+
     // Clean up the event listener
     return () => {
       socket.off('ride-confirmed');
@@ -72,7 +72,7 @@ const Home = () => {
 
   socket.on("ride-started", ride => {
     setwaitingfordriver(false);
-    navigate('/riding',{ state: { ride } });
+    navigate('/riding', { state: { ride } });
   });
 
   useEffect(() => {
@@ -242,15 +242,35 @@ const Home = () => {
     console.log(response.data);
   }
 
+  async function handleLogout() {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/logout`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      console.log('Logout successful:', response.data);
+      localStorage.removeItem('token');
+      navigate('/login');
+    } catch (error) {
+      console.error('Error during logout:', error.response?.data || error.message);
+      if (error.response?.status === 401) {
+        console.error('Unauthorized: Redirecting to login.');
+        localStorage.removeItem('token');
+        navigate('/login');
+      }
+    }
+  }
+
   return (
     <div className="h-screen relative">
-      <div>
-        <img
-          className="w-20 absolute left-5 top-5"
-          src={logo}
-          alt="uber logo"
-        />
-        
+      <div className="fixed top-5 right-5 z-50">
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 text-white px-4 py-2 rounded-full shadow-lg"
+        >
+          Logout
+        </button>
       </div>
       <div className="h-screen w-screen overflow-hidden">
         {/* image for temporary home page */}
