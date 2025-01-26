@@ -4,14 +4,14 @@ const LocationSearchPanel = (props) => {
   const suggestions = props.suggestions || [];
 
   return (
-    <div>
+    <div className="mt-2">
       {suggestions.map((element, index) => (
         <div 
           onClick={() => {
             props.handleSuggestionClick(element, props.type);
           }}
           key={index}
-          className="flex items-center p-3 border-2 border-white rounded-xl active:border-black"
+          className="flex items-center p-3 border-2 border-white rounded-xl active:border-black cursor-pointer hover:bg-gray-100 transition-all duration-200"
         >
           <h2>
             <i className="ri-map-pin-line rounded-full bg-gray-300 mr-3"></i>

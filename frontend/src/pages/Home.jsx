@@ -14,6 +14,7 @@ import { SocketContext } from "../context/SocketContext";
 import { UserDataContext } from "../context/UserContext";
 import {useNavigate} from 'react-router-dom'; 
 import { Link } from 'react-router-dom';
+import map from '../assets/img/map.png'
 
 const Home = () => {
 
@@ -255,7 +256,7 @@ const Home = () => {
         {/* image for temporary home page */}
         <img
           className="h-full w-full object-cover"
-          src="https://raw.githubusercontent.com/MindorksOpenSource/ridesharing-uber-lyft-app/master/assets/nearby-cabs.png"
+          src={map}
           alt=""
         />
       </div>

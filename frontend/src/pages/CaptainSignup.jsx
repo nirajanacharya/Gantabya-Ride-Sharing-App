@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { CaptainDataContext } from '../context/CaptainContext';
 import axios from 'axios';
 import logo from '../assets/img/logo.png';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CaptainSignup = () => {
   const navigate = useNavigate();
@@ -18,7 +20,7 @@ const CaptainSignup = () => {
   const [vehicleplate, setVehiclePlate] = useState('');
 
   const [errors, setErrors] = useState({});
-  const{ captain, setCaptain } = React.useContext(CaptainDataContext) // Use updateCaptain instead of setCaptain
+  const { captain, setCaptain } = useContext(CaptainDataContext);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -54,10 +56,17 @@ const CaptainSignup = () => {
         localStorage.setItem('token', data.token);
 
         // Set captain data in context
-        setCaptain(data.captain); // Use updateCaptain to set the captain data
+        setCaptain(data.captain);
 
-        // Navigate to captain home
-        navigate('/captain-home');
+        // Show success toast
+        toast.success('Registration successful! Redirecting to home...');
+
+        // Navigate to captain home after a short delay
+        setTimeout(() => {
+          navigate('/captain-home');
+        }, 1000);
+
+        // Reset form fields
         setFirstname('');
         setLastname('');
         setEmail('');
@@ -70,18 +79,16 @@ const CaptainSignup = () => {
     } catch (error) {
       console.error('Error during registration:', error.response?.data || error.message);
       setErrors(error.response?.data?.message || {});
+      toast.error('Registration failed. Please check your details.');
     }
   };
 
   return (
-    <div className="p-3 flex flex-col justify-between h-screen">
+    <div className="p-7 h-screen flex flex-col justify-between">
+      <ToastContainer />
       <div className="mb-5">
         <div>
-          <img
-            className="w-16 mb-5"
-            src={logo}
-            alt="Gantabya logo"
-          />
+          <img className="w-20 mb-5" src={logo} alt="Gantabya logo" />
         </div>
         <form onSubmit={submitHandler}>
           <h3 className="text-lg font-semibold mb-3">What's your Name?</h3>
@@ -182,6 +189,5 @@ const CaptainSignup = () => {
     </div>
   );
 };
-
 
 export default CaptainSignup;

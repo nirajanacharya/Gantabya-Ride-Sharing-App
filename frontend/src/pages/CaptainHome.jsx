@@ -9,6 +9,7 @@ import ConfirmRidePopUp from '../components/ConfirmRidePopUp';
 import { SocketContext } from '../context/SocketContext';
 import { CaptainDataContext } from '../context/CaptainContext';
 import axios from 'axios';
+import map from '../assets/img/map.png';
 
 const CaptainHome = () => {
     const [ridepopuppanel, setridepopuppanel] = useState(false);
@@ -116,7 +117,7 @@ const CaptainHome = () => {
             </div>
             <div className="h-3/5">
                 <img className="h-full  w-full object-cover"
-                    src="https://raw.githubusercontent.com/MindorksOpenSource/ridesharing-uber-lyft-app/master/assets/nearby-cabs.png"
+                    src={map}
                     alt=""
                 />
             </div>
