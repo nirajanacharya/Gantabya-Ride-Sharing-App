@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios' 
 import {UserDataContext} from '../context/UserContext'
+import logo from '../assets/img/logo.png'
 const UserSignup = () => {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
@@ -10,7 +11,7 @@ const UserSignup = () => {
   
   const navigate = useNavigate(); 
 
-  const {user, setuser} = React.useContext(UserDataContext) 
+  const {user, setUser} = React.useContext(UserDataContext) 
       //usestate for login data 
       
     
@@ -30,7 +31,7 @@ const UserSignup = () => {
         const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, newUser)
         if(response.status === 201){
           const data = response.data
-          setuser(data.user)
+          setUser(data.user)
           localStorage.setItem('token',data.token)
           navigate('/home')
         }
@@ -49,8 +50,8 @@ const UserSignup = () => {
       <div>
         <img
           className="w-16 mb-10 "
-          src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png"
-          alt="Uber logo"
+          src={logo}
+          alt="Gantabya logo"
         />
       </div>
       <form onSubmit={submitHandler}>
@@ -108,7 +109,7 @@ const UserSignup = () => {
       </form>
     </div>
     <div>
-      <p className="text-[10px] leading-2  ">By continuing, you agree to Uber's Terms of Service and Privacy Policy.</p>
+      <p className="text-[10px] leading-2  ">By continuing, you agree to Gantabya's Terms of Service and Privacy Policy.</p>
     </div>
   </div>
   )

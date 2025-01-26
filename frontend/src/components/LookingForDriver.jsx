@@ -19,7 +19,7 @@ const LookingForDriver = (props) => {
           <div className="flex items-center gap-5 p-3 border-b-2" >
             <i class="ri-user-location-fill"></i>
             <div>
-              <h3 className="text-lg font-medium">561/22</h3>
+              <h3 className="text-lg font-medium">pickup</h3>
               <p className="text-sm -mt-1 text-gray-600">
                 {props.pickup}
               </p>
@@ -28,7 +28,7 @@ const LookingForDriver = (props) => {
           <div className="flex items-center gap-5 p-3 border-b-2">
           <i className="ri-map-pin-line"></i>
             <div>
-              <h3 className="text-lg font-medium">561/22</h3>
+              <h3 className="text-lg font-medium">destination</h3>
               <p className="text-sm -mt-1 text-gray-600">
                 {props.destination}
               </p>

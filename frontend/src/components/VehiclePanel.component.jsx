@@ -17,12 +17,12 @@ const VehiclePanelcomponent = (props) => {
         <img className="h-16" src={car} alt="" />
         <div className="w-1/2 ml-3">
           <h4 className="font-medium">
-            UberGo{" "}
+            Car{" "}
             <span>
               <i className="ri-user-line"></i>4
             </span>
           </h4>
-          <h5 className="font-medium">2 mins away</h5>
+          <h5 className="font-medium">Available! </h5>
           <p className="text-sm text-gray-500">Affordable. compact rides</p>
         </div>
         <h2 className="ml-3 font-semibold text-2xl">रु.{fare.car !== undefined ? fare.car : 'N/A'}</h2>
@@ -38,7 +38,7 @@ const VehiclePanelcomponent = (props) => {
               <i className="ri-user-line"></i>1
             </span>
           </h4>
-          <h5 className="font-medium">3 mins away</h5>
+          <h5 className="font-medium">Available! </h5>
           <p className="text-sm text-gray-500">Affordable, motorcycle rides</p>
         </div>
         <h2 className="ml-3 font-semibold text-2xl">रु.{fare.motorcycle !== undefined ? fare.motorcycle : 'N/A'}</h2>
@@ -54,7 +54,7 @@ const VehiclePanelcomponent = (props) => {
               <i className="ri-user-line"></i>3
             </span>
           </h4>
-          <h5 className="font-medium">2 mins away</h5>
+          <h5 className="font-medium">Available! </h5>
           <p className="text-sm text-gray-500">Affordable Auto rides</p>
         </div>
         <h2 className="ml-3 font-semibold text-2xl">रु.{fare.auto !== undefined ? fare.auto : 'N/A'}</h2>

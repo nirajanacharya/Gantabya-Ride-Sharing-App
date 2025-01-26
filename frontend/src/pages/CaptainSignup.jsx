@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CaptainDataContext } from '../context/CaptainContext';
 import axios from 'axios';
+import logo from '../assets/img/logo.png';
 
 const CaptainSignup = () => {
   const navigate = useNavigate();
@@ -78,8 +79,8 @@ const CaptainSignup = () => {
         <div>
           <img
             className="w-16 mb-5"
-            src="https://www.svgrepo.com/show/505031/uber-driver.svg"
-            alt="Uber logo"
+            src={logo}
+            alt="Gantabya logo"
           />
         </div>
         <form onSubmit={submitHandler}>

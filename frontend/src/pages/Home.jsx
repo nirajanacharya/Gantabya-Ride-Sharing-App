@@ -6,13 +6,14 @@ import LocationSearchPanel from "../components/LocationSearchPanel.component";
 import car from "../assets/img/car.png";
 import VehiclePanelcomponent from "../components/VehiclePanel.component";
 import ConfirmedRide from "../components/ConfirmedRide";
-import GantabyaUser from "../assets/img/GantabyaUser-.png";
+import logo from "../assets/img/logo.png";
 import LookingForDriver from "../components/LookingForDriver";
 import WaitingForDriver from "../components/WaitingForDriver";
 import { useContext } from "react";
 import { SocketContext } from "../context/SocketContext";
 import { UserDataContext } from "../context/UserContext";
 import {useNavigate} from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 
 const Home = () => {
 
@@ -244,10 +245,11 @@ const Home = () => {
     <div className="h-screen relative">
       <div>
         <img
-          className="w-16 absolute left-5 top-5"
-          src={GantabyaUser}
+          className="w-20 absolute left-5 top-5"
+          src={logo}
           alt="uber logo"
         />
+        
       </div>
       <div className="h-screen w-screen overflow-hidden">
         {/* image for temporary home page */}

@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserDataContext } from "../context/UserContext";
 import axios from "axios";
-import GantabyaUser from "../assets/img/GantabyaUser.jpg";
+import logo from "../assets/img/logo.png";
 
 const UserLogin = () => {
   // Two-way binding data
@@ -49,7 +49,7 @@ const UserLogin = () => {
         <div>
           <img
             className=" -mt-5 -ml-8 w-[50%]  mb-10 "
-            src={GantabyaUser}
+            src={logo}
             alt="Uber logo"
           />
         </div>
