@@ -1,6 +1,7 @@
 
 
-# Gantabya Ride Sharing Web Application
+# Gantabya Ride Sharing Web Application inspired by Uber
+# For practice 
 
 Welcome to Gantabya, a ride-sharing web application designed to connect users with captains for a seamless and efficient transportation experience.
 
